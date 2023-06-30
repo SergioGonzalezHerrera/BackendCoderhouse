@@ -1,0 +1,11 @@
+[
+    {
+        "id": "15adda25-9995-4666-8033-8a72c664103d",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc127",
+        "stock": 25
+    }
+]

@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc123",
+        "stock": 25
+    },
+    {
+        "id": "ebc64eaf-6c2b-4232-9091-b5b0dd54f06b",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3",
+        "stock": 25
+    },
+    {
+        "id": "34fb15d2-30eb-4585-b92b-6975064a3e4f",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3a",
+        "stock": 25
+    },
+    {
+        "id": "8cbf1755-4a45-42d2-9e08-b1885df2c06b",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3a0.9884547684251668",
+        "stock": 25
+    },
+    {
+        "id": "ed182e52-d675-4a45-852f-80ce623bf122",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3a0",
+        "stock": 25
+    },
+    {
+        "id": "354a4e58-802a-426f-905b-d4424cb73583",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3aaaa24",
+        "stock": 25
+    },
+    {
+        "id": "6cff7ef9-86d3-468e-9568-9cf5cc69badd",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3aaaa9",
+        "stock": 25
+    },
+    {
+        "id": "cdd246f4-c6bc-4462-85a5-220378e21888",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3aaaa87",
+        "stock": 25
+    },
+    {
+        "id": "0fecc0e1-4e94-4c2b-b73e-1b5865edb0d6",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3aaaa91",
+        "stock": 25
+    },
+    {
+        "id": "cde6ae9a-c7c3-436c-a077-a27bde0ed473",
+        "title": "producto prueba",
+        "description": "Este es un producto de prueba",
+        "price": 200,
+        "thumbnail": "sin imagen",
+        "code": "abc1c3aaaa46",
+        "stock": 25
+    }
+]
