@@ -40,7 +40,7 @@ export class ProductManager {
             };
             this.products.push(newProduct);
             try {
-                await utils.writeFile(this.path, this.products);
+                await utils.writeFile(this.path, products);
             } catch (error) {
                 console.log(error);
             }
@@ -105,7 +105,7 @@ export class ProductManager {
                 let product = this.products[productIndex];
                 this.products.splice(productIndex, 1);
                 await utils.writeFile(this.path, products);
-                return { mensaje: "producto eliminado", producto: product };
+                return { mensaje: "producto eliminado", producto: this.product };
             } else {
                 return { mensaje: "no existe el producto solicitado" };
             }
