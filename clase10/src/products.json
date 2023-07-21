@@ -1,0 +1,24 @@
+[
+    {
+      "name": "Pelota de playa",
+      "price": 100,
+      "description": "Pelota de playa multicolor",
+      "code": "123456789",
+      "title": "Pelota",
+      "stock": 10,
+      "thumbnail": "https://s.alicdn.com/@sc04/kf/Hd443303ec79b420984f64ab3f9ba1247q.jpg_280x280.jpg"
+    },
+    {
+      "name": "Patinete"
+    },
+    {
+      "name": "aaaaa"
+    },
+    {
+      "name": "nuevo producto",
+      "price": "1234",
+      "thumbnail": "https://chuchesllami.com/cdn/shop/products/Kitkat_960x.jpg?v=1605779371",
+      "description": "descripcion de producto",
+      "title": "nuevo producto nuevo"
+    }
+  ]
