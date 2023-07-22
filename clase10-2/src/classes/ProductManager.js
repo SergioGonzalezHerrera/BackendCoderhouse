@@ -17,7 +17,6 @@ export class ProductManager {
             throw new Error("Todos los campos son obligatorios");
         }
         try {
-            // Utiliza this.filePath en lugar de this.path
             let data = await utils.readFile(this.filePath);
             this.products = data?.length > 0 ? data : [];
         } catch (error) {

@@ -3,13 +3,13 @@ import { ProductManager } from "../classes/ProductManager.js"
 import path from 'path';
 
 const router = Router()
-const productManager = new ProductManager("../products.json")
+const productManager = new ProductManager("../src/products.json")
 let products = []
 
 router.get('/realtimeproducts', async (req, res) => {
     try {
         const products = await productManager.getProducts();
-        res.render('realTimeProducts', { productos });
+        res.render('realTimeProducts', { products });
     } catch (error) {
         console.error('Error al obtener los productos:', error);
         res.status(500).send('Error al obtener los productos');
