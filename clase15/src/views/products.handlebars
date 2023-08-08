@@ -1,0 +1,45 @@
+{{#each productos}}
+<p>{{this.name}}</p>
+{{/each}}
+
+<form id="createProduct">
+    <label>Icono</label>
+    <input id="icon" type="text" />
+    <br />
+    <label>Nombre</label>
+    <input id="name" type="text" />
+    <br />
+    <label>Tipo</label>
+    <input id="type" type="text" />
+    <br />
+    <label>Rango</label>
+    <input id="rank" type="text" />
+    <br />
+    <label>Ataque Físico</label>
+    <input id="pattack" type="number" />
+    <br />
+    <label>Ataque Mágico</label>
+    <input id="mattack" type="number" />
+    <br />
+    <label>Velocidad de Ataque</label>
+    <input id="atkspd" type="number" />
+    <br />
+    <label>Crítico</label>
+    <input id="critical" type="number" />
+    <br />
+    <label>Soulshots</label>
+    <input id="soulshots" type="text" />
+    <br />
+    <label>Spiritshots</label>
+    <input id="spiritshots" type="text" />
+    <br />
+    <label>Peso</label>
+    <input id="weight" type="number" />
+    <br />
+    <label>Imagen</label>
+    <input id="image" type="text" />
+    <br />
+    <input type="submit" id="submit" value="Enviar" />
+</form>
+
+<script src="http://localhost:8080/js/script.js"></script>
