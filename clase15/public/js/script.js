@@ -16,7 +16,7 @@ const postMyData = async (data) => {
     }
 };
 
-document.getElementById("createPproduct").addEventListener("submit", (event) => {
+document.getElementById("createProduct").addEventListener("submit", (event) => {
     const icon = document.getElementById("icon").value;
     const name = document.getElementById("name").value;
     const type = document.getElementById("type").value

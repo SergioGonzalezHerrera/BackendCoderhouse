@@ -4,10 +4,10 @@ const router = Router();
 const products = new Products();
 
 router.get("/productos", async (req, res) => {
-    const productos = await products.getAll();
-
-    res.render("products", { productos });
+        const productos = await products.getAll();
+        res.render('products', { productos });
 });
+
 router.get("/", async (req, res) => {
     try {
         const respuesta = await products.getAll();

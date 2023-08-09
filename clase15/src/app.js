@@ -5,7 +5,7 @@ import mongoose from "mongoose"
 import * as dotenv from 'dotenv' 
 import productsRouter from "./routes/products.router.js"
 import cors from "cors";
-import viewsRouter from "./routes/views.router.js";
+// import viewsRouter from "./routes/views.router.js";
 // import usersRouter from "./routes/users.router.js";
 // import coursesRouter from "./routes/courses.router.js";
 
@@ -24,7 +24,7 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use("/", viewsRouter);
+// app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 
 // app.use("/api/users", usersRouter);
