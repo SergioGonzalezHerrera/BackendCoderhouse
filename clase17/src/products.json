@@ -1,0 +1,120 @@
+[
+  {
+    "id": 1,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var001",
+    "stock": 25
+  },
+  {
+    "id": 2,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var002",
+    "stock": 25
+  },
+  {
+    "id": 3,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var003",
+    "stock": 25
+  },
+  {
+    "id": 4,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var004",
+    "stock": 25
+  },
+  {
+    "id": 5,
+    "name": "asd",
+    "title": "ESTE PRODUCTO FUE MODIFICADOaaaa",
+    "description": "ACTUALIZADO CON POSTMAN",
+    "price": 1666,
+    "thumbnail": "Asd",
+    "code": "Prueba code ACT POST",
+    "stock": 777
+  },
+  {
+    "id": 6,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var006",
+    "stock": 25
+  },
+  {
+    "id": 7,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var007",
+    "stock": 25
+  },
+  {
+    "id": 8,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var008",
+    "stock": 25
+  },
+  {
+    "id": 9,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var009",
+    "stock": 25
+  },
+  {
+    "id": 10,
+    "name": "asd",
+    "title": "producto prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "var010",
+    "stock": 25
+  },
+  {
+    "name": "asd",
+    "title": "asd",
+    "description": "asd",
+    "price": "1",
+    "thumbnail": "asd",
+    "code": "asd1",
+    "stock": "1"
+  },
+  {
+    "name": "sajklsaflkjsadljkñ",
+    "title": "safljksalkjñdlasfdlñjk",
+    "description": "asdfkljñasdkjlfñlkjasdflkjñ",
+    "price": "90867087",
+    "thumbnail": "askljasdfkjlsdfañkljasdfkljñjklñ",
+    "code": "kljñasdkñljasdfkjñl",
+    "stock": "0987"
+  }
+]
