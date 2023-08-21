@@ -1,36 +1,59 @@
-const postMyData = async (data) => {
-    console.log("aqui vamos", data);
-    try {
-        const response = await fetch("http://localhost:8080/api/products/", {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-        const datos = await response.json();
-        return datos;
-    } catch (err) {
-        console.log(err);
-    }
-};
+const socket = io() // levantamos el socket desde el lado del cliente
 
-document.getElementById("createProduct").addEventListener("submit", (event) => {
-    const icon = document.getElementById("icon").value;
-    const name = document.getElementById("name").value;
-    const type = document.getElementById("type").value
-    const rank = document.getElementById("rank").value;
-    const pattack = document.getElementById("pattack").value;
-    const mattack = document.getElementById("mattack").value;
-    const atkspd = document.getElementById("atkspd").value;
-    const critical = document.getElementById("critical").value;
-    const soulshots = document.getElementById("soulshots").value;
-    const spiritshots = document.getElementById("spiritshots").value;
-    const weight = document.getElementById("weight").value;
-    const image = document.getElementById("pattack").value;
-    const data = { icon, name, type, rank, pattack, mattack, atkspd, critical, soulshots, spiritshots, weight, image };
-    postMyData(data)
-        .then(alert("Creado exitosamente"))
-        .catch((err) => console.log("error"));
-});
+socket.on('render', (data) => {
+    console.log(data)
+})
+
+
+const form = document.getElementById("formProducts")
+form.addEventListener("submit", (e) => {
+    e.preventDefault()
+    
+    const productTitle = document.getElementById("productTitle");
+    const productDescription = document.getElementById("productDescription")
+    const productPrice = document.getElementById("productPrice")
+    const productCode = document.getElementById("productCode")
+    const productStock = document.getElementById("productStock")
+    const productThumbnails = document.getElementById("productThumbnails")
+    const productCategory = document.getElementById("productCategory")
+
+    const product = {
+        title: productTitle.value,
+        description: productDescription.value,
+        price: productPrice.value,
+        code: productCode.value,
+        stock: productStock.value,
+        thumbnails: productThumbnails.value? [productThumbnails.value] : [],
+        category: productCategory.value
+    }
+
+    socket.emit('addProduct', product)
+
+    //vacio los campos del formualrio
+    productTitle.value = ""
+    productDescription.value = ""
+    productPrice.value= ""
+    productCode.value= ""
+    productStock.value = ""
+    productThumbnails.value = ""
+
+    //refresca para que se pueda actualizar la lista de productos.
+    location.reload()
+})
+
+const deleteButton = document.querySelectorAll(".deleteButton")
+deleteButton.forEach(button => {
+    button.addEventListener("click", () => {
+        const id = button.id
+        const productId = {
+            id: id
+        }
+        //envio el socket para recibirlo en el servidor
+        socket.emit('delete-product', productId)
+        //fuerzo el refresh para que se actualice la lista. 
+        location.reload()
+    })
+})
+
+
+

@@ -1,80 +1,102 @@
-import express from "express"
-import __dirname from "./utils.js"
-import handlebars from "express-handlebars"
-import mongoose from "mongoose"
-import * as dotenv from 'dotenv'
-import productsRouter from "./routes/products.router.js"
-import cors from "cors";
-import viewsRoutes from "./routes/views.router.js";
-import viewsRealTime from "./routes/realTimeProduct.router.js";
-import { guardarProducto } from "./routes/services/productUtils.js"
+import express from "express";
+import * as dotenv from "dotenv";
+import __dirname from "./utils.js";
+/* handlebars */
 import { engine } from "express-handlebars";
-import { createServer } from "http";
-import { Server } from "socket.io";
+import exphbs from "express-handlebars";
+/* importo rutas */
+import productRouter from "./routes/products.routes.js";
+import cartRouter from "./routes/carts.routes.js";
+import viewsRouter from "./routes/views.routes.js";
+import realTimeProductsRouter from "./routes/realTimeProducts.routes.js";
+import messagesRouter from "./routes/messages.routes.js";
 
+import { Server } from "socket.io"; //importo socket server
+
+import { addProduct, deleteProduct } from "./dao/dbManagers/productManager.js";
+import { addMessages, getMessages } from "./dao/dbManagers/messageManager.js";
+
+/* import { saveProduct } from './dao/fsManagers/services/productUtils.js';
+import { deleteProduct } from './dao/fsManagers/services/productUtils.js'; */
+/* importo mongoose */
+import mongoose from "mongoose";
+
+//instancio dotenv
 dotenv.config();
+
 const app = express();
+
 const PORT = process.env.PORT || 8080;
-const MONGO_URL = process.env.MONGO_URL;
-const connection = mongoose.connect(MONGO_URL);
-const httpServer = createServer(app);
-const PORT2=3030;
 
+/* ver porque no me toma la variable de entorno. */
+const MONGO_URI =
+  process.env.MONGO_URI ||
+  "mongodb+srv://sghdevelop:coderhouse@cluster0.y5vbeov.mongodb.net/ecommerce";
 
-app.engine("handlebars", handlebars.engine());
-app.set("views", __dirname + "/views");
-app.set("view engine", "handlebars");
+/* conexion a la BBDD de MongoDB */
+let dbConnect = mongoose.connect(MONGO_URI);
+dbConnect.then(() => {
+  console.log("conexion a la base de datos exitosa");
+}),
+  (error) => {
+    console.log("Error en la conexion a la base de datos", error);
+  };
 
-
-app.use(express.static("public"));
+/* middlewares */
 app.use(express.json());
-app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/products", productsRouter);
-app.use("/", viewsRoutes);
-app.use("/realtime", viewsRealTime);
+app.use(express.static("public"));
 
+/* config para usar handlebars */
 
-const server = app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
+// Configuración del motor de plantillas Handlebars
+const hbs = exphbs.create(); // Creamos el motor de plantillas
 
-// Iniciar el servidor HTTP
-httpServer.listen(PORT2, () => {
-    console.log(`Servidor en ejecución en http://localhost:${PORT2}`);
+// Registro del helper "prop" en el motor de plantillas para poder renderizar las propiedades de los objetos.
+hbs.handlebars.registerHelper("prop", function (obj, key) {
+  return obj[key];
 });
 
-// Configuración del lado del servidor
-const io = new Server(httpServer);
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
+app.set("views", `${__dirname}/views`);
 
-// Configurar el evento de conexión de Socket.IO
-io.on("connection", (socket) => {
-    console.log("Nuevo cliente conectado");
+/* Routes */
+app.use("/api/products", productRouter);
+app.use("/api/carts", cartRouter);
+app.use("/", viewsRouter);
+app.use("/realtimeproducts", realTimeProductsRouter);
+app.use("/messages", messagesRouter);
 
-    // Manejar eventos personalizados
-    socket.on("mensaje", (data) => {
-        console.log("Mensaje recibido:", data);
+//comenzamos a trabajar con sockets.
+const httpServer = app.listen(PORT, () => {
+  console.log(`Escuchando al puerto ${PORT}`);
+});
 
-        // Enviar una respuesta al cliente
-        socket.emit("respuesta", "Mensaje recibido correctamente");
-    });
+const socketServer = new Server(httpServer);
 
-    // Escuchar evento 'agregarProducto' y emitir 'nuevoProductoAgregado'
-    socket.on("agregarProducto", (newProduct) => {
-        console.log("Nuevo producto recibido backend:", newProduct);
-        guardarProducto(newProduct);
-        // Agregar el nuevo producto a la lista de productos
-        io.emit("nuevoProductoAgregado", newProduct);
-    });
+socketServer.on("connection", (socket) => {
+  console.log("Nuevo cliente se ha conectado");
 
-    /*socket.on("productoEliminado", (productID) => {
-      // Eliminar el producto de la lista en el cliente
-      const productoElement = document.querySelector(`[data-id="${productID}"]`);
-      if (productoElement) {
-        productoElement.parentElement.remove();
-      }
-    });
-    */
+  //socket on escucha
+  socket.on("message", (data) => {
+    console.log(data);
+  });
 
-    socket.on("disconnect", () => {
-        console.log("Cliente desconectado");
-    });
+  //socket emit envia
+  socket.emit("render", "Me estoy comunicando desde el servidor");
+
+  socket.on("addProduct", (product) => {
+    addProduct(product); // fn que agrega el producto creado en el form a la BBDD
+  });
+
+  socket.on("delete-product", (productId) => {
+    const { id } = productId;
+    deleteProduct(id); // fn que deletea el producto de la BBDD
+  });
+
+  socket.on("user-message", (obj) => {
+    addMessages(obj);
+    socketServer.emit("new-message", obj) //enviar el mensaje a todos los usuarios conectados
+  });
 });

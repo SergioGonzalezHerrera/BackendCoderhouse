@@ -1,45 +1,32 @@
-{{#each productos}}
-<p>{{this.name}}</p>
-{{/each}}
+<div>
+    <h1 class="title">Lista de productos.</h1>
+    <div class="list">
+        <ul>
+            {{#each products}}
+            <li>
+                <div class="info">
+                    <h2>
+                        {{prop this 'title'}}
+                    </h2>
+                    <div class="description-category">
+                        <p><span>Description:</span> {{prop this 'description'}}</p>
+                        <p><span>Category:</span> {{prop this 'category'}}</p>
+                    </div>
+                    <div class="price-stock">
+                        <p><span>Price:</span> ${{prop this 'price'}}</p>
+                        <p><span>Stock:</span> {{prop this 'stock'}}</p>
+                    </div>
+                </div>
+                <div class="thumbnails">
+                    {{#each (prop this 'thumbnails')}}
+                        <img src="{{this}}" alt="{{prop ../this 'title'}}">
+                    {{/each}}
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+<script src="./js/script.js"></script>
+<script src="./js/products.js"></script>
 
-<form id="createProduct">
-    <label>Icono</label>
-    <input id="icon" type="text" />
-    <br />
-    <label>Nombre</label>
-    <input id="name" type="text" />
-    <br />
-    <label>Tipo</label>
-    <input id="type" type="text" />
-    <br />
-    <label>Rango</label>
-    <input id="rank" type="text" />
-    <br />
-    <label>Ataque Físico</label>
-    <input id="pattack" type="number" />
-    <br />
-    <label>Ataque Mágico</label>
-    <input id="mattack" type="number" />
-    <br />
-    <label>Velocidad de Ataque</label>
-    <input id="atkspd" type="number" />
-    <br />
-    <label>Crítico</label>
-    <input id="critical" type="number" />
-    <br />
-    <label>Soulshots</label>
-    <input id="soulshots" type="text" />
-    <br />
-    <label>Spiritshots</label>
-    <input id="spiritshots" type="text" />
-    <br />
-    <label>Peso</label>
-    <input id="weight" type="number" />
-    <br />
-    <label>Imagen</label>
-    <input id="image" type="text" />
-    <br />
-    <input type="submit" id="submit" value="Enviar" />
-</form>
-
-<script src="http://localhost:8080/js/script.js"></script>
