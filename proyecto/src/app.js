@@ -1,25 +1,30 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import __dirname from "./utils.js";
-/* handlebars */
-import { engine } from "express-handlebars";
 import exphbs from "express-handlebars";
-/* importo rutas */
 import productRouter from "./routes/products.routes.js";
 import cartRouter from "./routes/carts.routes.js";
 import viewsRouter from "./routes/views.routes.js";
 import realTimeProductsRouter from "./routes/realTimeProducts.routes.js";
 import messagesRouter from "./routes/messages.routes.js";
 
-import { Server } from "socket.io"; //importo socket server
+import { Server } from "socket.io";
 
 import { addProduct, deleteProduct } from "./dao/dbManagers/productManager.js";
 import { addMessages, getMessages } from "./dao/dbManagers/messageManager.js";
 
-/* import { saveProduct } from './dao/fsManagers/services/productUtils.js';
-import { deleteProduct } from './dao/fsManagers/services/productUtils.js'; */
-/* importo mongoose */
 import mongoose from "mongoose";
+
+import cookierParser from "cookie-parser";
+import session from "express-session";
+
+// import FileStore from "session-file-store";
+
+import MongoStore from "connect-mongo";
+
+import LoginRoute from "./routes/login.routes.js";
+import SignupRoute from "./routes/signup.routes.js";
+import SessionRoute from "./routes/session.routes.js";
 
 //instancio dotenv
 dotenv.config();
@@ -100,3 +105,144 @@ socketServer.on("connection", (socket) => {
     socketServer.emit("new-message", obj) //enviar el mensaje a todos los usuarios conectados
   });
 });
+
+//COOKIES Y SESSION
+
+app.use(cookierParser("C0d3rS3cr3t"));
+
+// app.use(
+//   session({
+//     secret: "codersecret",
+//     resave: true,
+//     saveUninitialized: true,
+//   })
+// );
+
+function auth(req, res, next) {
+  if (req.session?.user === "pepe" && req.session?.admin) {
+    return next();
+  }
+  return res.status(401).json("error de autenticacion");
+}
+//*****cookiess */
+app.get("/cookies", (req, res) => {
+  res.render("cookies", {});
+});
+app.get("/login", (req, res) => {
+  res.render("login", {});
+});
+app.get("/setCookie", (req, res) => {
+  const { name, lastname } = req.query;
+  //guardamos una cookie
+  res
+    .cookie(
+      "CoderCookie",
+      JSON.stringify({
+        nombre: name,
+        apellido: lastname,
+      }),
+      {
+        maxAge: 30000,
+        signed: true,
+      }
+    )
+    .send("Cookie");
+});
+
+app.get("/getCookies", (req, res) => {
+  //obtenemos las cookies del sitio
+  // cookier sin firmar
+  //res.send(req.cookies);
+  //cookies firmadas
+  res.send(req.signedCookies);
+});
+app.get("/deleteCookies", (req, res) => {
+  //obtenemos las cookies del sitio
+  res.clearCookie("CoderCookie").send("Se  elimino la cookie");
+});
+
+//*****session */
+app.get("/session", (req, res) => {
+  if (req.session.counter) {
+    req.session.counter++;
+    res.send(`Se ha visitado el sitio ${req.session.counter} veces.`);
+  } else {
+    req.session.counter = 1;
+    res.send(`Bienvenido,es su primera vez por aca`);
+  }
+});
+
+app.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (!err) {
+      res.send("Logout ok!");
+    } else {
+      res.json({
+        status: "Error al cerrar sesion",
+        body: err,
+      });
+    }
+  });
+});
+app.post("/login", (req, res) => {
+  console.log(req.body);
+  const { username, password } = req.body;
+  if (username !== "pepe" || password !== "pepepass")
+    return res.status(401).json({
+      respuesta: "error",
+    });
+
+  req.session.user = username;
+  req.session.admin = true;
+  res.status(200).json({
+    respuesta: "ok",
+  });
+});
+
+app.get("/privado", auth, (req, res) => {
+  res.render("topsecret", {});
+});
+
+//*****session */
+//******** session con filestorage */
+
+//const fileStorage = FileStore(session);
+
+/*
+app.use(
+
+  session({
+    store: new fileStorage({
+      path: "./sessions",
+      ttl: 100,
+      retries: 0,
+    }),
+    secret: "codersecret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+*/
+//******** session con filestorage */
+
+//******** session con mongodb */
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl: MONGO_URI,
+      mongoOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+      ttl: 30,
+    }),
+    secret: "codersecret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+//******** session con mongodb */
+
+app.use("/login", LoginRoute);
+app.use("/signup", SignupRoute);
+app.use("/api/session/", SessionRoute);
