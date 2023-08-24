@@ -25,6 +25,11 @@ import MongoStore from "connect-mongo";
 import LoginRoute from "./routes/login.routes.js";
 import SignupRoute from "./routes/signup.routes.js";
 import SessionRoute from "./routes/session.routes.js";
+import ForgotRoute from "./routes/forgot.routes.js";
+
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
+
 
 //instancio dotenv
 dotenv.config();
@@ -246,3 +251,9 @@ app.use(
 app.use("/login", LoginRoute);
 app.use("/signup", SignupRoute);
 app.use("/api/session/", SessionRoute);
+app.use("/forgot", ForgotRoute);
+
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
