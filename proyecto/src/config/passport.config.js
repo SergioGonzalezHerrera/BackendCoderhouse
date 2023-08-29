@@ -2,6 +2,7 @@ import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import userService from "../dao/models/user.models.js";
 import * as dotenv from "dotenv";
+import crypto from "crypto";
 
 dotenv.config();
 
