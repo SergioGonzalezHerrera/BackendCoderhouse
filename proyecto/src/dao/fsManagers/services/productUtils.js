@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import __dirname from "../../../utils.js";
+import __dirname from "../../../helpers/utils.js";
 
 export function getProductsList () {
     const filePath = path.join(__dirname, './products.json')

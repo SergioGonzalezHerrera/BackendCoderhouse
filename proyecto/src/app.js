@@ -1,6 +1,6 @@
 import express from "express";
 import * as dotenv from "dotenv";
-import __dirname from "./utils.js";
+import __dirname from "./helpers/utils.js";
 import exphbs from "express-handlebars";
 import productRouter from "./routes/products.routes.js";
 import cartRouter from "./routes/carts.routes.js";
